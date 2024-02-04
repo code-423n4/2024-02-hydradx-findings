@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "Wall-d",
+  "risk": "2",
+  "title": "Inadequate error handling in calcuations could cause calls to revert",
+  "issueId": 2,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/2"
+}
