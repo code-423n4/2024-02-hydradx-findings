@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "Wall-d",
+  "risk": "3",
+  "title": "add_token function can be frontrunned to add a particular asset to the amm at lesser price ",
+  "issueId": 3,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/3"
+}
