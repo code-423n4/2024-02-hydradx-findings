@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "castle_chain",
+  "risk": "2",
+  "title": "add_liquidity function is vulnerable to Reentrancy attack due to transferring assets from user to the protocol after updating the state and adding the new position for the user , and the asset implement on_transfer hook.      ",
+  "issueId": 17,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/17"
+}
