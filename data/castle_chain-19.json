@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "castle_chain",
+  "risk": "2",
+  "title": "any user can bypass the MinimumTradingLimit constant and perform selling tokens with amount less than the minimum limit ",
+  "issueId": 19,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/19"
+}
