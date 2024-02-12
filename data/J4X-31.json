@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "J4X",
+  "risk": "2",
+  "title": "Trading Limit is not enforced on output of sell() in StableSwap",
+  "issueId": 31,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/31"
+}
