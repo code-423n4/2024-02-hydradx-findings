@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "Wall-d",
+  "risk": "3",
+  "title": "Tradability struct should be an enum to have  different options",
+  "issueId": 34,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/34"
+}
