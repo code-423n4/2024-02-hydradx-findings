@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "J4X",
+  "risk": "2",
+  "title": "MinTradingLimit can be bypassed using do_add_liquidity_shares()",
+  "issueId": 23,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/23"
+}
