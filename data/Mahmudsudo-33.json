@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "Mahmudsudo",
+  "risk": "3",
+  "title": "lack of timelock on liquidity added before it is removable ",
+  "issueId": 33,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/33"
+}
