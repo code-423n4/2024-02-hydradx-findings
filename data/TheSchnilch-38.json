@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "TheSchnilch",
+  "risk": "2",
+  "title": "remove_liquidity_one_asset returns a smaller amount of assets than withdraw_asset_amount for the same shares",
+  "issueId": 38,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/38"
+}
