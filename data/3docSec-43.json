@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "3docSec",
+  "risk": "2",
+  "title": "Omnipool's asset fees can cost users more than the nominal amount in low-liquidity scenarios",
+  "issueId": 43,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/43"
+}
