@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "3docSec",
+  "risk": "2",
+  "title": "Omnipool token transfer filter can be bypassed for HDX",
+  "issueId": 44,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/44"
+}
