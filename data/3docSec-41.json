@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "3docSec",
+  "risk": "3",
+  "title": "Missing slippage check in Stableswap's `add_liquidity` function",
+  "issueId": 41,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/41"
+}
