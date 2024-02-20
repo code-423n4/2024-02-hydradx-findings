@@ -67,61 +67,7 @@ File: math.rs
 
 Even though this is unlikely to be exploited in a real-world scenario where this logic is integrated with safe token transfers, consider using a `checked_mul` instead of `saturating_mul` at L635.
 
-# [L-03] Min-shares check in Stableswap's withdraw_asset_amount should apply to issuance instead of users shares
-
-https://github.com/code-423n4/2024-02-hydradx/blob/603187123a20e0cb8a7ea85c6a6d718429caad8d/HydraDX-node/pallets/stableswap/src/lib.rs#L677-L681
-
-The Omnipool has a `MinPoolLiquidity` health check against the `total_issuance` of pool shares, for preventing price manipulations:
-
-```
-File: lib.rs
-551: 		pub fn remove_liquidity_one_asset(
----
-552: 			origin: OriginFor<T>,
-553: 			pool_id: T::AssetId,
-554: 			asset_id: T::AssetId,
-555: 			share_amount: Balance,
-556: 			min_amount_out: Balance,
-557: 		) -> DispatchResult {
-558: 			let who = ensure_signed(origin)?;
----
-581: 			let share_issuance = T::Currency::total_issuance(pool_id);
-582: 
-583: 			ensure!(
-584: 				share_issuance == share_amount
-585: 					|| share_issuance.saturating_sub(share_amount) >= T::MinPoolLiquidity::get(),
-586: 				Error::<T>::InsufficientLiquidityRemaining
-587: 			);
-```
-
-This check is however incorrectly applied to the user's `free_balance` instead of the pool's `total_issuance` in the `withdraw_asset_amount` function: 
-
-```
-File: lib.rs
-638: 		pub fn withdraw_asset_amount(
----
-639: 			origin: OriginFor<T>,
-640: 			pool_id: T::AssetId,
-641: 			asset_id: T::AssetId,
-642: 			amount: Balance,
-643: 			max_share_amount: Balance,
----
-644: 		) -> DispatchResult {
-645: 			let who = ensure_signed(origin)?;
----
-676: 			let current_share_balance = T::Currency::free_balance(pool_id, &who);
-677: 			ensure!(
-678: 				current_share_balance == shares
-679: 					|| current_share_balance.saturating_sub(shares) >= T::MinPoolLiquidity::get(),
-680: 				Error::<T>::InsufficientShareBalance
-681: 			);
-```
-
-Checking `free_balance` instead of `total_issuance` makes this check unfairly strict to users who want to trim their position down to less than `MinPoolLiquidity`; these users can't make use of `withdraw_asset_amount`, despite their request is perfectly legitimate in presence of other LP share holders.
-
-The availability risk is somewhat mitigated by the fact that only withdraw operations with negligible values can fail, and other options like `remove_liquidity_one_asset`, are still available.
-
-# [L-04] Stableswap amplification changes can cut previous ramps short
+# [L-03] Stableswap amplification changes can cut previous ramps short
 
 https://github.com/code-423n4/2024-02-hydradx/blob/603187123a20e0cb8a7ea85c6a6d718429caad8d/HydraDX-node/pallets/stableswap/src/lib.rs#L426-L438
 
