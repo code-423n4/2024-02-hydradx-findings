@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "J4X",
+  "risk": "2",
+  "title": "remove_liquidity is incorrectly benchmarked",
+  "issueId": 53,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/53"
+}
