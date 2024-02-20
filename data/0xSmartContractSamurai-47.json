@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "0xSmartContractSamurai",
+  "risk": "2",
+  "title": "`2024-02-hydradx/HydraDX-node/math/src/stableswap/math.rs::calculate_spot_price()` - Should use `asset_idx >= n`, not `asset_idx > n`.",
+  "issueId": 47,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/47"
+}
