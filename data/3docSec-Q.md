@@ -92,7 +92,7 @@ File: lib.rs
 This can cut short a pre-existing ramp, freezing entirely its evolution between in the time between the `update_amplification` and `start_block`.
 Consider letting the pre-existing ramp evolve until `start_block` is reached, and only at this point, freeze the previous ramp's current value to become the new ramp's `initial_amplification`.
 
-# [L-05] Token transfers to stableswap pools are not filtered
+# [L-04] Token transfers to stableswap pools are not filtered
 
 https://github.com/code-423n4/2024-02-hydradx/blob/603187123a20e0cb8a7ea85c6a6d718429caad8d/HydraDX-node/runtime/hydradx/src/system.rs#L65-L87
 
