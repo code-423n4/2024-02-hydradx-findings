@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "castle_chain",
+  "risk": "3",
+  "title": "an attacker can drain all the liquidity of the stable swap pools by setting asset_in equal to asset_out , and call buy function",
+  "issueId": 58,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/58"
+}
