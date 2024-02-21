@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "J4X",
+  "risk": "2",
+  "title": "Vulnerable Dependencies allowing DOS",
+  "issueId": 56,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/56"
+}
