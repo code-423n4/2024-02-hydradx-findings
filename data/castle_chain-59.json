@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "castle_chain",
+  "risk": "2",
+  "title": "loss of funds for liquidity providers due to that add_liquidity_shares function takes more assets than what add_liquidity function takes to mint the same amount of shares for the liquidity provider . ",
+  "issueId": 59,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/59"
+}
