@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "fractal_20892",
+  "risk": "2",
+  "title": "Insufficient input calidation in  the set_asset_weight_cap function",
+  "issueId": 61,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/61"
+}
