@@ -1,3 +1,111 @@
+# Stapleswap
+## 1) liquidity providers can not provide amount of assets that will result in shares more than the total issuance by calling `add_liquidity_shares` function , which is considered loss of value for the protocol .
+affected code : 
+https://github.com/code-423n4/2024-02-hydradx/blob/603187123a20e0cb8a7ea85c6a6d718429caad8d/HydraDX-node/math/src/stableswap/math.rs#L317-L337
+
+the function `add_liquidity_shares` uses the function `calculate_add_one_asset` [here](https://github.com/code-423n4/2024-02-hydradx/blob/603187123a20e0cb8a7ea85c6a6d718429caad8d/HydraDX-node/math/src/stableswap/math.rs#L317) which has a constrain that ensures that the shares specified by the user to be minted are not greater than the total issuance , there is nothing should prevent the liquidity providers from providing such amount of asset , and this amount of shares to be minted is not prevented by the function `add_liquidity` so such a constrain should be removed .
+```rust 
+        if shares > share_asset_issuance {
+                return None;
+        }
+```
+### coded poc 
+consider add this test to the test file `add_liquidity.rs`
+```rust 
+#[test]
+fn add_liquidity_should_work_correctly_when_fee_is_applied_test() {
+	let asset_a: AssetId = 1;
+	let asset_b: AssetId = 2;
+	let asset_c: AssetId = 3;
+	ExtBuilder::default()
+		.with_endowed_accounts(vec![
+			(BOB, asset_a, 200_000_000_000_000_000_000),
+			(ALICE, asset_a, 52425995641788588073263117),
+			(ALICE, asset_b, 52033213790329),
+			(ALICE, asset_c, 119135337044269),
+		])
+		.with_registered_asset("one".as_bytes().to_vec(), asset_a, 18)
+		.with_registered_asset("two".as_bytes().to_vec(), asset_b, 6)
+		.with_registered_asset("three".as_bytes().to_vec(), asset_c, 6)
+		.with_pool(
+			ALICE,
+			PoolInfo::<AssetId, u64> {
+				assets: vec![asset_a, asset_b, asset_c].try_into().unwrap(),
+				initial_amplification: NonZeroU16::new(2000).unwrap(),
+				final_amplification: NonZeroU16::new(2000).unwrap(),
+				initial_block: 0,
+				final_block: 0,
+				fee: Permill::from_float(0.0001),
+			},
+			InitialLiquidity {
+				account: ALICE,
+				assets: vec![
+					AssetAmount::new(asset_a, 5_641_788_588_073_263_117),
+					AssetAmount::new(asset_b, 52033213790329),
+					AssetAmount::new(asset_c, 119135337044269),
+				],
+			},
+		)
+		.build()
+		.execute_with(|| {
+			let pool_id = get_pool_id_at(0);
+			// let amount = 2_000_000_000_000_000_000;
+			let total_shares = Tokens::total_issuance(pool_id); 
+			assert_ok!(Stableswap::add_liquidity_shares(
+				RuntimeOrigin::signed(BOB),
+				pool_id,
+				total_shares + 1 , 
+				asset_a , 
+				200_000_000_000_000_000_000
+			));
+			let received = Tokens::free_balance(pool_id, &BOB);
+			println!("shares received after providing 2_000_000_000_000_000_000 asset and call add_liquidity function : {:?}", received);
+			let bob_balance = Tokens::free_balance(asset_a, &BOB);
+			let used = 200_000_000_000_000_000_000 - bob_balance ; 
+			println!("used : {:?}" , used);
+		});
+// 108_887_514_683_615_710_558 assets should be taken from the user but the function call will revert due to that the shares requested are more than the total issuance 
+}
+
+```
+
+this test should revert due to the shares requested is greater than the total issuance by 1 
+to make this test work you can simply remove this one here 
+```diff 
++       total_shares ,
+-				total_shares + 1 , 
+```
+
+### Recommendation 
+consider removing this constrain 
+```diff
+-        if shares > share_asset_issuance {
+-                return None;
+-        }
+```
+
+## 2) huge loss of funds for the users and the protocol , if the pool is created with share_asset that does have a different decimals from 18 decimals 
+affected code : 
+https://github.com/code-423n4/2024-02-hydradx/blob/603187123a20e0cb8a7ea85c6a6d718429caad8d/HydraDX-node/pallets/stableswap/src/lib.rs#L341-L369 . 
+
+https://github.com/code-423n4/2024-02-hydradx/blob/603187123a20e0cb8a7ea85c6a6d718429caad8d/HydraDX-node/pallets/stableswap/src/lib.rs#L950-L992
+
+The implementation of stableswap assumes that all the shares assets have 18 decimals only but there is no check for this in the function `create_pool` which can allow set the `share_asset` to has any number of decimals which will affect the whole pool since the normalization function scale all the reserves to 18 decimals in order to calculate D , and Y parameters . 
+
+**the impact is :** 
+this will lead to huge loss of funds for the user and the protocol because of the wrong calculation of Y , and D parameters 
+
+### Recommendations 
+consider adding a check to ensure that the `share_asset` decimals are equal to 18 decimals .
+add this check to the `do_create_pool` function : 
+```diff 
++                ensure!(
++                        T::AssetInspection::decimals(share_asset)== 18,
++                        Error::<T>::Invalid_decimals
++                );
+```
+
+# Omnipool
 ## 1) If the initial token price is set too far from the oracle price within the `add_token()` function, it will lead to the freezing of liquidity provision .
 affected code : https://github.com/code-423n4/2024-02-hydradx/blob/603187123a20e0cb8a7ea85c6a6d718429caad8d/HydraDX-node/pallets/omnipool/src/lib.rs#L447-L549 . 
 
