@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "eta",
+  "risk": "2",
+  "title": "Not Cleaned Properly Leading to Inconsistent State in the Functions of `remove_liquidity()`, `remove_token()`, and `remove_asset()```",
+  "issueId": 66,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/66"
+}
