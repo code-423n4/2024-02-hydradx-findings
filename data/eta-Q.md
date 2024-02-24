@@ -1,8 +1,8 @@
-Addressing Rounding Discrepancies in Fee Calculations in  `math.rs::calculate_fee_amount_for_buy`
+# Addressing Rounding Discrepancies in Fee Calculations in  `math.rs::calculate_fee_amount_for_buy`
 
-## Summary
+## Impact
 
-The protocol notice specifies rounding fees up, contrary to the current practice using the div() in `math::calculate_fee_amount_for_buy`.
+The protocol notice specifies rounding fees up, contrary to the current practice using the div() in `math::calculate_fee_amount_for_buy`. The contradiction to round against the user to prevent any potential system exploitation as mentioned in the notice.
 
 ## Vulnerability Details
 
@@ -39,8 +39,12 @@ pub(crate) fn calculate_fee_amount_for_buy(fee: Permill, amount: Balance) -> Bal
 }
 ```
 
-## Impact
-The contradiction to round against the user to prevent any potential system exploitation as mentioned in the notice.
+## Tools Used
+Manual Review
 
 ## Recommendation
 It is advised to use `div_ceil()` to round up the fee as shown in Vulnerability Details.
+```solidity
++       .div_ceil(denominator.saturating_sub(numerator))
+-	.div(denominator.saturating_sub(numerator))
+```
