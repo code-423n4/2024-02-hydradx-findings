@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "cryptphi",
+  "risk": "3",
+  "title": "No access control on ensure_pool_state_change_limit() can allow a user to block trading",
+  "issueId": 68,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/68"
+}
