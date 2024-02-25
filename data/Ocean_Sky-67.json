@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "Ocean_Sky",
+  "risk": "3",
+  "title": "Swap functions (Buy and Sell) are not working properly for assets with different number of decimal places",
+  "issueId": 67,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/67"
+}
