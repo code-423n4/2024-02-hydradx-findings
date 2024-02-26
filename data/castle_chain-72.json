@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "castle_chain",
+  "risk": "2",
+  "title": "Inaccurate Price Checks and Fee Calculations Due to Stale Oracle Data: A Risk to User Funds and Protocol Sustainability .",
+  "issueId": 72,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/72"
+}
