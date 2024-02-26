@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "TheSchnilch",
+  "risk": "2",
+  "title": "Re-adding assets to the omnipool can cause a problem with the oracle",
+  "issueId": 73,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/73"
+}
