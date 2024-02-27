@@ -3,6 +3,8 @@ HydraDx omnipool is cutting edge AMM that utilizes omnipool to gather all assets
 
 HydraDx protocol offers stapleswap pallet which is offering users the ability to trade stablecoins with an exceptionally low price slippage . 
 
+HydraDX employs a novel approach to price discovery by utilizing exponential moving average (EMA) oracles. These oracles play a crucial role in averaging prices for all trading pairs within the omnipool pallet, effectively mitigating the risk of price manipulation.
+
 the scope of this contest consists of 4 main components which are :
 1) **omnipool pallet** 
 2) **Stableswap pallet**
@@ -21,9 +23,15 @@ the scope of this contest consists of 4 main components which are :
 - **lib.rs :** this file contains the main implementations of the pallet which include liquidity provision and removal , swapping (buy/sell) , and create liquidity pools .
 - **math.rs :** this file contains all math implementations which are required for the pallet such as `calculate_withdraw_one_asset` ,and `calculate_shares_for_amount` .
 - **types.rs :** this file contains the custom type related to the pallet and its implementations such as `AssetReserve` .
-# System overview and risks 
-HydraDX is well-designed AMM that implement cutting edge technology of trading assets , the system architechture consists of pallets , each pallet contains the implementations of a specific component which are configered in the runtime pallet , the main pallets for this audit are the onmipool pallet and the stableswap pallet .  
 
+### 3) ema-oracle pallet :
+- **lib.rs :** this file contains all the functions that can be called by other pallets in order to get prices such as `get_price` and ,and provide data to oracle such as `on_trade` and `on_liquidity_changed` functions .
+- **math.rs :** this file contains all the math implementations of the ema-oracle , to calculate the average price over different periods such as ten minutes or days or weeks .  
+
+# System overview and risks 
+HydraDX is well-designed AMM that implement cutting edge technology of trading assets , the system architechture consists of pallets , each pallet contains the implementations of a specific component which are configered in the runtime pallet , the main pallets for this audit are the onmipool pallet and the stableswap pallet . 
+
+ 
 ## Omnipool Pallet :
 
 Omnipool is type of AMM where all assets are pooled together into one single pool.
@@ -66,6 +74,20 @@ Roles is provided by the omnipool pallet and .....  , the Roles are generally as
 3) **add_liquidity_shares :** this function add liquidity by specifing the shares needed by the user so this function uses a different logic from the one implemented in `add_liquidity` function , this function calculates `d0` and `d1` then apply the fees on the reserves of the pool and then calculate the `y1` which represents the new reserve of the asset to be added .
 4) **buy / sell** functions : those functions can be used to swapping assets from the pool by specifing the asset_id and the amount_in or amount_out , this functions calculate the D and Y parameters for each function call to return the right value of the trade .
 5) **remove_liquidity_one_asset :** allows a user to remove liquidity from a specific asset in a stableswap pool by burning a specified amount of pool shares and receiving a corresponding amount of the asset in return, while ensuring the operation adheres to the pool's rules and updates the pool's state accordingly , this function calls `calculate_withdraw_one_asset` function which performs all the math to calculate the amount to be taken from the user ,The function calculates the new value of D1 after the shares are removed. It then calculates the amount of the asset that can be withdrawn  without considering fees, by adjusting the reserves to exclude the asset being withdrawn and recalculating D .
+
+## ema-oracle pallet :
+1) `on_trade` and `on_liquidity_changed` functions : 
+those function can be called from other pallets (sources) to provide an oracle entry to the oracle , those functions directly update the accumulator which accumulate all the data provided within a single block , and then update the oracle storage , those function can provide a price of a pair of assets in each call , the price is stored in an oracle entry which is identified by the source and the pair of asset and the period aggregated over , the pair of assets should be order before been stored in the oracle 
+  - **security Consideration** : 
+   the function should check that the price provided has a valid pair of asset and the two assets are not the same asset , to store only the valid prices . 
+  **how does the oracle collect the data from different sources**
+1) The oracle receive the new price of a certain pair of assets such as (LRNA / DAI) or (USDC / USDT) from a source such as (omnipool or stableswap pool) , so the keys of an accumulated entry is the source and the asset\_id of the pair of keys  
+    source ---> asset\_id ---> asset\_id ---> accumulated entry.  
+    there are two types of hooks in hydra ecosystem which are `on_trade` and `on_liqudity_changed` , which provide the oracle with the most recent price of the asset pairs .
+2) the two hooks call the internal functions `on_trade` and `on_liquidity_changed` , this will order the assets and the data , and then update the accumulator . 
+
+2) **`get_price` :** this function provides other pallets with the most recent price collected form the sources , this function get the entry from oracle storage by calling the function `get_entry` , which calls the function `get_updated_entry` to calculate the current average price from the last updated entry , which guarantees that the price provided is the last aggregated price . 
+  
 ## system improvements 
 1) allow partial distruction. 
 this will be useful to allow donation to the protocol , if the protocol entered a bad state , so instead of only allow `full distruction` of position , allow also partial distruction and it should be done only by the owner of the position , this improvement will add an new feature to support the protocol and donate to it . 
@@ -73,23 +95,31 @@ this will be useful to allow donation to the protocol , if the protocol entered 
 The protocol should provide an additional layer of protection to the liquidity provider from slippage and price manipulation by allow them to set a safty parameter to ensure that the amount out from the protocol is equal to greater than what lps expected , so this will enhance the user experience in dealing with this omnipool . 
 3) use dynamic and asset specific value for `minimumTradingLimit` and `minimumPoolLiquidity`
 using dynamic minimum limit and make the it specific for each asset , will decrease the possibilty of preventing the token from being used , because each token in the ecosystem has diffrerent decimals and the value of each token differs also , so specifing a constant minimum limit for all asset can prevent some users from using this token because the minimum limit worth a big value or providing the minimum limit will exceed the `max_weight_cap` of this token .
-4) add comments to all math files since they have a complex logic but there is no enough amount comments to describe all the calculations done .    
+4) add comments to all math files since they have a complex logic but there is no enough amount comments to describe all the calculations done . 
+5) create a function to calculate `delta_shares` since it got calculated several times in the code , and to increase the modularity of the code it will be better to create a function to calculate this value in the file `math.rs` .  
 ## Approach Taken-in Evaluating hydraDX Protocol 
 Accordingly, I analyzed and audited the subject in the following steps:
-1) omnipool pallet overview :
-   - I started with this pallet because it has the main implementation that this audit is for and play critical role in hydraDx protocol , then I started by examining each function and I focused on the main functions that perform all the logic of the liquidity pool , and then I moved to the governance functions to examin how they are implemented ,and then I moved to reviewing the math of the omnipool in the `math.rs` file , which has all math implementation of adding and removing liquidity and also has the logic of selling and buy token from the pool 2) stableswap pallet overview :
+1) **omnipool pallet overview** :
+   - I started with this pallet because it has the main implementation that this audit is for and play critical role in hydraDx protocol , then I started by examining each function and I focused on the main functions that perform all the logic of the liquidity pool , and then I moved to the governance functions to examin how they are implemented ,and then I moved to reviewing the math of the omnipool in the `math.rs` file , which has all math implementation of adding and removing liquidity and also has the logic of selling and buy token from the pool.
+
+2) **stableswap pallet overview** :
    - I frist went line by line through the code to understand the functions and the implementation of the pallet , then I read [curve finance white paper](https://curve.fi/files/stableswap-paper.pdf) to get better understanding of stapleswap mechanism , then I reviewed math file to understand the complex math implementation of the pallet , and I wrote my notes which related to the vulnerabilities that I found  .
    - then I started to read tests and run them and then write my own tests to test edge cases . 
-3) Documentation Review:
+3) **Documentation Review** :
     then went to review the [docs](https://docs.hydradx.io/)  for a more detailed and technical explanation of Olas protocol.
 4) compiling code and running the provided tests.
 5)  **Manuel Code Review** In this phase, I initially conducted a line-by-line analysis, following that, I engaged in a comparison mode.
    - **Line by Line Analysis:**  Pay close attention to the pallet’s intended functionality and compare it with its actual behavior on a line-by-line basis.
    - **Comparison Mode:**  Compare the implementation of each function with established standards or existing implementations such as `sell` vs `buy` , `add_liuqidity` vs `remove_liquidity` ,and `add_token` vs `remove_token`.
-6) **Reporting and writing POC** : I started collect my notes from the files and wrote a POC to my findings .
+6) **ema-oracle review :** 
+- going line by line through the code to check the validity of each function 
+- read all the tests and write my own tests to test the edge cases of the code .  
+8) **Reporting and writing POC** : I started collect my notes from the files and wrote a POC to my findings .
 
 ## time spent 
 176 hours over 25 days 
+
+
 
 
 ### Time spent:
