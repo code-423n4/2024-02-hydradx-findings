@@ -189,3 +189,71 @@ https://github.com/code-423n4/2024-02-hydradx/blob/603187123a20e0cb8a7ea85c6a6d7
 -                    let current_hub_asset_liquidity = T::Currency::free_balance(T::HubAssetId::get(), &Self::protocol_account());
 +                          let hub_asset_liquidity = Self::get_hub_asset_balance_of_protocol_account();
 ```
+
+# Ema_oracle
+
+ ## 1) prevnet calling the funtcions `on_trade` and `on_liquidity_changed` with asset_in = asset_out , to prevent storing invalid prices . 
+code affected : 
+1) https://github.com/code-423n4/2024-02-hydradx/blob/603187123a20e0cb8a7ea85c6a6d718429caad8d/HydraDX-node/pallets/ema-oracle/src/lib.rs#L386-L417
+2) https://github.com/code-423n4/2024-02-hydradx/blob/603187123a20e0cb8a7ea85c6a6d718429caad8d/HydraDX-node/pallets/ema-oracle/src/lib.rs#L428-L456
+
+the function `on_trade` and `on_liquidity_changed` do not check if the `asset_in` equal `asset_out` or not , so this will allow storing invalid prices in the oracle . 
+
+since the function `buy` on stableswap pallet does not prevent that `asset_in` to be equal to `asset_out` as shown here : 
+https://github.com/code-423n4/2024-02-hydradx/blob/603187123a20e0cb8a7ea85c6a6d718429caad8d/HydraDX-node/pallets/stableswap/src/lib.rs#L787-L807
+
+```rust 
+                pub fn buy(
+                        origin: OriginFor<T>,
+                        pool_id: T::AssetId,
+                        asset_out: T::AssetId,
+                        asset_in: T::AssetId,
+                        amount_out: Balance,
+                        max_sell_amount: Balance,
+                ) -> DispatchResult {
+                        let who = ensure_signed(origin)?;
+
+
+                        ensure!(
+                                Self::is_asset_allowed(pool_id, asset_in, Tradability::SELL)
+                                        && Self::is_asset_allowed(pool_id, asset_out, Tradability::BUY),
+                                Error::<T>::NotAllowed
+                        );
+
+
+                        ensure!(
+                                amount_out >= T::MinTradingLimit::get(),
+                                Error::<T>::InsufficientTradingAmount
+                        );
+
+
+```
+### Recommendation 
+the function should prevent set `asset_in` to be equal to `asset_out`
+
+
+## 2) prevent store prices from `on_trade` function with `amount_a` and `amount_b` equal to zero . 
+code affected:
+https://github.com/code-423n4/2024-02-hydradx/blob/603187123a20e0cb8a7ea85c6a6d718429caad8d/HydraDX-node/pallets/ema-oracle/src/lib.rs#L386-L404
+
+`on_trade` function should be called by the `adapter` in order to storing the price after a trade has been executed , in order to consider the price comes from a trade is valid the amount traded should be greater than zero . 
+
+### Recommendation 
+the function should check if the `amount_a` and `amount_b` are greater than zero , if not the function should return error .
+consider add this code to `on_trade` function . 
+```rust
+
+                // We assume that zero liquidity values are not valid and can be ignored.
+                if amount_a.is_zero() && amount_b.is_zero() {
+                        log::warn!(
+                                target: LOG_TARGET,
+                                "trade amounts should not be zero. Source: {source:?}, amounts: ({amount_a},{amount_b})"
+                        );
+                        return Err((Self::on_trade_weight(), Error::<T>::OnTradeValueZero.into()));
+                }
+
+
+```
+
+
+
