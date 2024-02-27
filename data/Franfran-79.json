@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "Franfran",
+  "risk": "3",
+  "title": "No slippage check for most liquidity related operations",
+  "issueId": 79,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/79"
+}
