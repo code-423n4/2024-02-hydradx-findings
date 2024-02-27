@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "carrotsmuggler",
+  "risk": "2",
+  "title": "[M05] `MinimumPoolLiquidity` check affects tokens with different decimals differently",
+  "issueId": 89,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/89"
+}
