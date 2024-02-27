@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "carrotsmuggler",
+  "risk": "3",
+  "title": "[H02] No `safe_withdrawal` option in `withdraw_protocol_liquidity` function in omnipool can be abused by frontrunners to cause losses to the admin when removing liquidity",
+  "issueId": 84,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/84"
+}
