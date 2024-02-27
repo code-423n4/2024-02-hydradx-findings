@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "alkrrrrp",
+  "risk": "2",
+  "title": "Using `pallet_balances::Call::transfer_allow_death` to send native token to the omnipool protocol account can manipulate the native token price",
+  "issueId": 98,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/98"
+}
