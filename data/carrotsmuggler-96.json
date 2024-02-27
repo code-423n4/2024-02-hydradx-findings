@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "carrotsmuggler",
+  "risk": "2",
+  "title": "[M12] Stableswap decrease in Amplification factor can be used to steal tokens from the pool",
+  "issueId": 96,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/96"
+}
