@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "carrotsmuggler",
+  "risk": "2",
+  "title": "[M11] Liquidity addition and removal in omnipool can go offline during periods of high volatility.",
+  "issueId": 95,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/95"
+}
