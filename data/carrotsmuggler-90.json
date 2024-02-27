@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "carrotsmuggler",
+  "risk": "2",
+  "title": "[M06] Missing price check in `add_token` in omnipool can DOS further deposits.",
+  "issueId": 90,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/90"
+}
