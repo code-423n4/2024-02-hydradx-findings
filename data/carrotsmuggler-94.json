@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "carrotsmuggler",
+  "risk": "2",
+  "title": "[M10] `withdraw_protocol_liquidity` at a wrong price can be used to drain the pool",
+  "issueId": 94,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/94"
+}
