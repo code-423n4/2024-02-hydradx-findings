@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "carrotsmuggler",
+  "risk": "2",
+  "title": "[M08] No slippage check in `add_liquidity` can lead to less liquidity shares being minted to liquidity providers.",
+  "issueId": 92,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/92"
+}
