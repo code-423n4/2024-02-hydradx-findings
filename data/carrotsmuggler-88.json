@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "carrotsmuggler",
+  "risk": "2",
+  "title": "[M04] Missing check for input=output in stableswap math",
+  "issueId": 88,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/88"
+}
