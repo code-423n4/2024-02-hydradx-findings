@@ -255,5 +255,64 @@ consider add this code to `on_trade` function .
 
 ```
 
+# circuit breaker 
 
+## should check that the amounts to be added or subtracted are greater than zero before executing the rest of the function and update the values . 
+code affected : 
+https://github.com/code-423n4/2024-02-hydradx/blob/603187123a20e0cb8a7ea85c6a6d718429caad8d/HydraDX-node/pallets/circuit-breaker/src/lib.rs#L485-L516
+
+https://github.com/code-423n4/2024-02-hydradx/blob/603187123a20e0cb8a7ea85c6a6d718429caad8d/HydraDX-node/pallets/circuit-breaker/src/lib.rs#L518-L545
+
+
+the functions such as `ensure_and_update_trade_volume_limit` , and `ensure_and_update_add_liquidity_limit` , should make sure that the `amount_out` and `amount_in` , and `liquidity_added` are greater than zero before keeping execution of the code.
+
+
+```rust 
+        fn ensure_and_update_trade_volume_limit(
+                asset_in: T::AssetId,
+                amount_in: T::Balance,
+                asset_out: T::AssetId,
+                amount_out: T::Balance,
+        ) -> DispatchResult {
+                // liquidity in
+                // ignore Omnipool's hub asset
+                if asset_in != T::OmnipoolHubAsset::get() {
+                        let mut allowed_liquidity_range = Pallet::<T>::allowed_trade_volume_limit_per_asset(asset_in)
+                                .ok_or(Error::<T>::LiquidityLimitNotStoredForAsset)?;
+
+
+                        allowed_liquidity_range.update_amounts(amount_in, Zero::zero())?;
+                        allowed_liquidity_range.check_limits()?;
+
+
+                        <AllowedTradeVolumeLimitPerAsset<T>>::insert(asset_in, allowed_liquidity_range);
+                }
+
+
+                // liquidity out
+                // ignore Omnipool's hub asset
+                if asset_out != T::OmnipoolHubAsset::get() {
+                        let mut allowed_liquidity_range = Pallet::<T>::allowed_trade_volume_limit_per_asset(asset_out)
+                                .ok_or(Error::<T>::LiquidityLimitNotStoredForAsset)?;
+
+
+                        allowed_liquidity_range.update_amounts(Zero::zero(), amount_out)?;
+                        allowed_liquidity_range.check_limits()?;
+
+
+                        <AllowedTradeVolumeLimitPerAsset<T>>::insert(asset_out, allowed_liquidity_range);
+                }
+
+
+                Ok(())
+        }
+```
+## Recommendation 
+check that those amounts are not equal to zero .
+```rust 
+ensure!(
+			!amount_out.is_zero() && !amount_in.is_zero(),
+			Error::<T>::invalidValues
+		);
+```
 
