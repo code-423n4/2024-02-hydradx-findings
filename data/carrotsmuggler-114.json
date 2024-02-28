@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "carrotsmuggler",
+  "risk": "3",
+  "title": "`ensure_price` slippage control in omnipools can be bypassed with swaps",
+  "issueId": 114,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/114"
+}
