@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "oakcobalt",
+  "risk": "2",
+  "title": "Omnipool add and remove liquidity do not have slippage protection, LPs are at risk of loss due to price change",
+  "issueId": 125,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/125"
+}
