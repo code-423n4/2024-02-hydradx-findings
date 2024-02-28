@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "alix40",
+  "risk": "2",
+  "title": "Bypassing Minimum Pool Liquidity Limit via Liquidity Removal Could Lead To DoS",
+  "issueId": 118,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/118"
+}
