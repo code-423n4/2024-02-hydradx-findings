@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "emerald7017",
+  "risk": "2",
+  "title": "The totals approach the maximum u128 value, where checked arithmetic operations start failing transactions even if the limits are not crossed.",
+  "issueId": 107,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/107"
+}
