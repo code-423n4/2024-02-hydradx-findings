@@ -316,3 +316,39 @@ ensure!(
 		);
 ```
 
+## Potential Liquidity addition Freeze in Omnipool Due to Limited Add Functionality by the circuit breaker . 
+
+Omnipool enforces a minimum limit of 1,000,000 for both adding and removing liquidity, regardless of the specific asset.
+
+due to that there is no Ranges for the limits in the circuit breaker , and considering that the default_max_add_liquidity_limit is equal to 5% , the liquidity addition can be freezed by depositing the initial deposit equals to the `MinimumPoolLiquidity` , so if the initial liquidity is 1_000_000 the max amount to be added in a single block allowed by the circuit breaker is 5000 which is much less than the minimum limit of liquidity set by the omnipool , so the liquidity addition will be freezed . 
+
+### Recommendations
+set the max limit of adding liquidity of the asset in the circuit breaker to be equal to the minimum liquidity limit of the omnipool if the calculated max limit is below it .
+
+```diff
+        fn calculate_and_store_liquidity_limits(asset_id: T::AssetId, initial_liquidity: T::Balance) -> DispatchResult {
+                // we don't track liquidity limits for the Omnipool Hub asset
+                if asset_id == T::OmnipoolHubAsset::get() {
+                        return Ok(());
+                }
+
+
+                // add liquidity
+                if let Some(limit) = Pallet::<T>::add_liquidity_limit_per_asset(asset_id) {
+                        if !<AllowedAddLiquidityAmountPerAsset<T>>::contains_key(asset_id) {
+                                let max_limit = Self::calculate_limit(initial_liquidity, limit)?;
++                 if (max_limit < 1_000_000) {
++                  max_limit = 1_000_000 ; 
++                 }
+                                <AllowedAddLiquidityAmountPerAsset<T>>::insert(
+                                        asset_id,
+                                        LiquidityLimit::<T> {
+                                                limit: max_limit,
+                                                liquidity: Zero::zero(),
+                                        },
+                                );
+                        }
+                }
+
+
+```
