@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "cryptphi",
+  "risk": "3",
+  "title": "No access control on add_asset() public function in Omnipool contract",
+  "issueId": 119,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/119"
+}
