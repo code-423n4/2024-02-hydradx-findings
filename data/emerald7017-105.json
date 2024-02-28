@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "emerald7017",
+  "risk": "2",
+  "title": "Unrestricted Privilege Allows Constraint Bypass",
+  "issueId": 105,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/105"
+}
