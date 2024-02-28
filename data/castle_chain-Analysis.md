@@ -1,9 +1,9 @@
 # Overview of HydraDX 
-HydraDx omnipool is cutting edge AMM that utilizes omnipool to gather all assets into one single pool which allow seemless trading between asset and facilates buy and selling assets in polkadot ecosystem 
+HydraDx omnipool is cutting edge AMM that utilizes omnipool to gather all assets into one single pool which allow seemless trading between asset and facilates buy and selling assets in polkadot ecosystem . 
 
-HydraDx protocol offers stapleswap pallet which is offering users the ability to trade stablecoins with an exceptionally low price slippage . 
+the protocol offers stapleswap pallet which is offering users the ability to trade stablecoins with an exceptionally low price slippage . 
 
-HydraDX employs a novel approach to price discovery by utilizing exponential moving average (EMA) oracles. These oracles play a crucial role in averaging prices for all trading pairs within the omnipool pallet, effectively mitigating the risk of price manipulation.
+It also employs a novel approach to price storing and providing by using exponential moving average (EMA) oracles. These oracles play a crucial role in averaging prices for all trading pairs within the omnipool pallet, effectively mitigating the risk of price manipulation.
 
 the scope of this contest consists of 4 main components which are :
 1) **omnipool pallet** 
@@ -27,7 +27,8 @@ the scope of this contest consists of 4 main components which are :
 ### 3) ema-oracle pallet :
 - **lib.rs :** this file contains all the functions that can be called by other pallets in order to get prices such as `get_price` and ,and provide data to oracle such as `on_trade` and `on_liquidity_changed` functions .
 - **math.rs :** this file contains all the math implementations of the ema-oracle , to calculate the average price over different periods such as ten minutes or days or weeks .  
-
+### 4) circuit breaker pallet : 
+- **lib.rs** : this pallet consists only of this file and it contains all the implementations which are required to set the limits and monitor all the trades volumes and removing , adding liquidity . 
 # System overview and risks 
 HydraDX is well-designed AMM that implement cutting edge technology of trading assets , the system architechture consists of pallets , each pallet contains the implementations of a specific component which are configered in the runtime pallet , the main pallets for this audit are the onmipool pallet and the stableswap pallet . 
 
@@ -36,7 +37,7 @@ HydraDX is well-designed AMM that implement cutting edge technology of trading a
 
 Omnipool is type of AMM where all assets are pooled together into one single pool.
 the main files that implement the most of the logic are **lib.rs** and **math.rs**.
-### 1) Analysis and Security considerations about each function :
+###  Analysis and Security considerations about each function :
 1) **`add_token()`** : this function is used to add new asset to the omnipool , the asset to be added should be risgtered in the asset registry first and then the token can be added to the omnipool by the `authority_origin` , and the token should have initial position to be created with amount of asset is greater than zero . 
 
  - **security considerations** : 
@@ -87,7 +88,27 @@ those function can be called from other pallets (sources) to provide an oracle e
 2) the two hooks call the internal functions `on_trade` and `on_liquidity_changed` , this will order the assets and the data , and then update the accumulator . 
 
 2) **`get_price` :** this function provides other pallets with the most recent price collected form the sources , this function get the entry from oracle storage by calling the function `get_entry` , which calls the function `get_updated_entry` to calculate the current average price from the last updated entry , which guarantees that the price provided is the last aggregated price . 
-  
+
+## circuit breaker 
+ circuit breaker pallet meticulously manages and enforces various types of limits on a pool assets within the omnipool and the stapleswap pallets . This granular control over trade volume, liquidity addition, and removal empowers hydraDX to operate with stability and security while catering to the specific requirements of each asset within the pool.
+### core functionality : 
+1) **Trade Volume Limits:** 
+- Limits are specified as a percentage of the total pool's liquidity in each block , These limits are stored for each asset individually within the `TradeVolumeLimitPerAsset` storage map .
+- To effectively enforce the limits, the pallet keeps track of the traded volume for each asset using the `AllowedTradeVolumeLimitPerAsset` storage item. This storage item holds information about the current volume traded for the corresponding asset.
+-  Whenever a trade occurs, the `ensure_and_update_trade_volume_limit` function is called to verify and update the trade volume. This function meticulously checks the limits set for the involved assets and ensures they are not surpassed.
+
+2) **Liquidity Limits:**
+-  There are limits for removing liquidity and adding liquidity , these limits are stored independently for each asset using the `LiquidityAddLimitPerAsset` and `LiquidityRemoveLimitPerAsset storage items` .
+-  Similar to trade volume, the pallet tracks the amount of liquidity added/removed for each asset. This information is stored within the `AllowedAddLiquidityAmountPerAsset` and `AllowedRemoveLiquidityAmountPerAsset` . 
+-  The `ensure_and_update_add_liquidity_limit` and `ensure_and_update_remove_liquidity_limit` functions are responsible for upholding the set limits during liquidity operations within the block . These functions meticulously assess the limits, ensuring that the actions do not exceed the permissible limits . 
+## Roles : 
+1) whitelisted accounts :  The `WhitelistedAccounts` list serves as a mechanism to exempt specific accounts from liquidity limitations. These accounts are authorized to add or remove liquidity regardless of the set limits . 
+
+2) Root : The `is_origin_whitelisted_or_root` function as default whitelists the root account, granting it unrestricted access to liquidity operations irrespective of the limitations in place. This safeguard ensures that critical actions can still be undertaken by the admins .
+
+## security considerations  :
+1) **Limit Constraints:** The `MAX_LIMIT_VALUE` constant restricts the maximum limit percentage to 10000 (100%), preventing the configuration of unrealistic or exploitable limitations .
+
 ## system improvements 
 1) allow partial distruction. 
 this will be useful to allow donation to the protocol , if the protocol entered a bad state , so instead of only allow `full distruction` of position , allow also partial distruction and it should be done only by the owner of the position , this improvement will add an new feature to support the protocol and donate to it . 
@@ -113,11 +134,15 @@ Accordingly, I analyzed and audited the subject in the following steps:
    - **Comparison Mode:**  Compare the implementation of each function with established standards or existing implementations such as `sell` vs `buy` , `add_liuqidity` vs `remove_liquidity` ,and `add_token` vs `remove_token`.
 6) **ema-oracle review :** 
 - going line by line through the code to check the validity of each function 
-- read all the tests and write my own tests to test the edge cases of the code .  
+- read all the tests and write my own tests to test the edge cases of the code .
+7) **circuit breaker reviewing** : 
+- reviewed all files related to this pallet and also reviewed the adapters pallet in the runtime pallets since it is responsible for calling the circuit breaker .  
 8) **Reporting and writing POC** : I started collect my notes from the files and wrote a POC to my findings .
 
 ## time spent 
 176 hours over 25 days 
+
+
 
 
 
