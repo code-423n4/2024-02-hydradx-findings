@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "0xTheC0der",
+  "risk": "2",
+  "title": "Insufficient origin verification in oracle activity handlers",
+  "issueId": 150,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/150"
+}
