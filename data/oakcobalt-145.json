@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "oakcobalt",
+  "risk": "3",
+  "title": "Incorrect asset_fee implementation in omnipool's buy methods, causing incorrect swap in amount calculation. ",
+  "issueId": 145,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/145"
+}
