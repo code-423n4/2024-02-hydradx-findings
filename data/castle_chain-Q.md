@@ -257,7 +257,7 @@ consider add this code to `on_trade` function .
 
 # circuit breaker 
 
-## should check that the amounts to be added or subtracted are greater than zero before executing the rest of the function and update the values . 
+## 1) should check that the amounts to be added or subtracted are greater than zero before executing the rest of the function and update the values . 
 code affected : 
 https://github.com/code-423n4/2024-02-hydradx/blob/603187123a20e0cb8a7ea85c6a6d718429caad8d/HydraDX-node/pallets/circuit-breaker/src/lib.rs#L485-L516
 
@@ -316,7 +316,7 @@ ensure!(
 		);
 ```
 
-## Potential Liquidity addition Freeze in Omnipool Due to Limited Add Functionality by the circuit breaker . 
+## 2) Potential Liquidity addition Freeze in Omnipool Due to Limited Add Functionality by the circuit breaker . 
 
 Omnipool enforces a minimum limit of 1,000,000 for both adding and removing liquidity, regardless of the specific asset.
 
