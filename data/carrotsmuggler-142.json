@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "carrotsmuggler",
+  "risk": "2",
+  "title": "[H04] Inefficient Liquidity removal form stableswap can lead to losses and MEV opportunities",
+  "issueId": 142,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/142"
+}
