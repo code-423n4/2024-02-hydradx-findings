@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "cryptphi",
+  "risk": "3",
+  "title": "No access control on update_asset_state() public function in Omnipool contract can lead to user gaining more funds",
+  "issueId": 131,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/131"
+}
