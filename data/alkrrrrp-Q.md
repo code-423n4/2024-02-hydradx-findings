@@ -6,6 +6,10 @@
 
 2. In the `add_liquidity` extrinsic, when calculating the `hub_reserve_ratio`, the `current_hub_asset_liquidity` variable can be used to avoid one database read.
 
+3. Missing `MinimumPoolLiquidity` check in `remove_liquidity`
+
+Similar to the `remove_liquidity_one_asset` in the Stableswap, the user should either withdraw all liquidity or leave >= `MinimumPoolLiquidity` liquidity in the position, otherwise there may be a lot of small positions occupy the runtime state.
+
 ## Stableswap
 
 1. Missing `InsufficientLiquidityRemaining` check in the `withdraw_asset_amount` extrinsic.
