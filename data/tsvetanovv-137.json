@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "tsvetanovv",
+  "risk": "3",
+  "title": "The state of an asset is not updated after a user sacrifice his position via `sacrifice_position()`",
+  "issueId": 137,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/137"
+}
