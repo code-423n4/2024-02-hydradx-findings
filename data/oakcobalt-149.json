@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "oakcobalt",
+  "risk": "2",
+  "title": "In stableswap, Incorrect d value might be used in various trading and liquidity calculation, resulting in either pool loss or user loss",
+  "issueId": 149,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/149"
+}
