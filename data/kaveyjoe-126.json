@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "kaveyjoe",
+  "risk": "2",
+  "title": "False Circuit Breaker Activation due to Inaccurate Observations and Insufficient Disabling Conditions",
+  "issueId": 126,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/126"
+}
