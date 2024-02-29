@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "bin2chen",
+  "risk": "3",
+  "title": "Stableswap.buy() Lack of Restrictions asset_in!=asset_out,  Allows Users to Steal Funds",
+  "issueId": 133,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/133"
+}
