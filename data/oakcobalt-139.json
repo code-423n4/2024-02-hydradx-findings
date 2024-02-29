@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "oakcobalt",
+  "risk": "2",
+  "title": "Various trading and liquidity management methods lack stale transaction protection, risks of invalid/outdated slippage protection values",
+  "issueId": 139,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/139"
+}
