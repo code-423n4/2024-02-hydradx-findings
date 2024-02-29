@@ -189,7 +189,28 @@ https://github.com/code-423n4/2024-02-hydradx/blob/603187123a20e0cb8a7ea85c6a6d7
 -                    let current_hub_asset_liquidity = T::Currency::free_balance(T::HubAssetId::get(), &Self::protocol_account());
 +                          let hub_asset_liquidity = Self::get_hub_asset_balance_of_protocol_account();
 ```
+## 5) should add [require_transactional] macro for the function that should perform storage update to make sure that storage mutated successfully . 
 
+code affected : https://github.com/code-423n4/2024-02-hydradx/blob/603187123a20e0cb8a7ea85c6a6d718429caad8d/HydraDX-node/pallets/omnipool/src/lib.rs#L1698-L1705 
+
+as per frame docs [here](https://paritytech.github.io/polkadot-sdk/master/frame_support/attr.require_transactional.html)
+the `require_transactional` macro should be used if the function is executed within storage transaction .  
+
+ the function `sell_hub_asset` should have `[require_transactional]` macro to make sure that storage update is done correctly , otherwise this can allow execution without send the assets to the protocol and to the user , which is considered loss of funds for the user and the protocol  . 
+ 
+ ### Recommendation 
+ add the `[require_transactional]` macro . 
+ cosider add this line to the function `sell_hub_asset`
+ ```diff 
++       #[require_transactional]
+        fn sell_hub_asset(
+                origin: T::RuntimeOrigin,
+                who: &T::AccountId,
+                asset_out: T::AssetId,
+                amount: Balance,
+                limit: Balance,
+        ) -> DispatchResult {
+```
 # Ema_oracle
 
  ## 1) prevnet calling the funtcions `on_trade` and `on_liquidity_changed` with asset_in = asset_out , to prevent storing invalid prices . 
