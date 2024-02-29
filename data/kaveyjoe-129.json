@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "kaveyjoe",
+  "risk": "2",
+  "title": " Inconsistent interval and lack of checks for outdated observations in EMA calculation",
+  "issueId": 129,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/129"
+}
