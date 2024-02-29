@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "tsvetanovv",
+  "risk": "3",
+  "title": "The `on_liquidity_changed` hook is not called in some functions",
+  "issueId": 141,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/141"
+}
