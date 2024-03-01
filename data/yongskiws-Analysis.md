@@ -150,6 +150,12 @@ Optimization Suggestions:
 - Consider using more efficient data structures such as `BTreeMap` or `HashMap` where applicable.
 - Ensure memory usage can be optimized by reducing unnecessary allocations.
 
+## Circuit breaker
+| Potential Performance Issues | Description                                                                                                                                               | Optimization Recommendations                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Excessive Memory Usage       | Some functions, such as `update_amounts`, `check_outflow_limit`, and `check_influx_limit`, involve significant memory usage due to the data structures used. | - Ensure to minimize memory usage by considering the selection of more efficient data types if possible.                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| Resource Leakage             | There are several arithmetic operations that do not consider resource leakage, such as in the `calculate_limit` function.                                | - Check each arithmetic operation and make sure to handle resource leakage cases, such as overflow and division by zero.                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+
 
 # Approach we followed when reviewing the code
 
@@ -181,7 +187,8 @@ Optimization Suggestions:
 ## EMA Oracle
 ![adwadwa](https://github.com/yongsxyz/Audit-Analysis/assets/39027215/4cfb96db-4afb-422b-8b73-2f5fc2679a80)
 
-
+## Circuit Breaker
+![Circuit breaker](https://github.com/yongsxyz/Audit-Analysis/assets/39027215/48bf1173-df03-4aa6-a37c-cb5b4cd12b07)
 
 # Conclusion
 
