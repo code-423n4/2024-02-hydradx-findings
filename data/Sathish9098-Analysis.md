@@ -45,15 +45,20 @@ HydraDX incorporates a decentralized governance model, allowing token holders to
 
 #### Exact Issue with Faulty Implementation
 ``Incorrect Adjustments``: If there are errors in the logic or implementation of the SimpleImbalance mechanism (e.g., due to programming mistakes, oversight, or incorrect assumptions), it might not accurately reflect the true state of the hub asset's balance within the pool.
+
 ``Improper Minting or Burning``: Consequently, the system may mint or burn the hub asset incorrectly. For instance, it might mint too much of the hub asset during a deficit, leading to oversupply, or burn too much during a surplus, leading to scarcity.
+
 ``Impact on Stability``: Such inaccuracies can destabilize the hub asset's value. An oversupply might reduce its value, while an undersupply might artificially inflate it. Since the hub asset is central to the Omnipool's operation, serving as the intermediary for trades between different asset pairs, its stability is crucial for the entire ecosystem.
+
 ``Operational Integrity Risk``: The overall operational integrity of the Omnipool relies heavily on the stability of the hub asset. Any significant deviation in its value due to a faulty SimpleImbalance mechanism could undermine user trust, disrupt liquidity provision and trading activities, and potentially lead to systemic failures within the ecosystem.
 
 ### Incorrect Fee Calculation and Distribution Risk 
 
 #### Mechanism Overview
 ``Purpose``: The on_trade_fee hook is designed to levy a fee on trades conducted within the Omnipool. This fee is typically a percentage of the trade value.
+
 ``Calculation``: The hook calculates the fee amount based on the trade size and the predetermined fee rate.
+
 ``Distribution``: After calculation, the fees are distributed according to the protocol's rules—typically, a portion goes to liquidity providers as an incentive, and another portion may support the protocol's development or governance treasury.
 
 #### Risk: Incorrect Fee Calculation and Distribution:
