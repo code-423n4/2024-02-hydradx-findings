@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "oakcobalt",
+  "risk": "2",
+  "title": "No slippage protection for adding liquidity in stableswap pool for add_liquidity()",
+  "issueId": 152,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/152"
+}
