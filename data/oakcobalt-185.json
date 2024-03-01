@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "oakcobalt",
+  "risk": "2",
+  "title": "Ema-oracle will ignore accumulator spot prices in some cases, resulting in incorrect ema prices",
+  "issueId": 185,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/185"
+}
