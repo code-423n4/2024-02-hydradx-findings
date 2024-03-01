@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "oakcobalt",
+  "risk": "2",
+  "title": "In stableswap pool,  add_liquidity_shares' s maximum share restriction can be bypassed in multiple ways",
+  "issueId": 151,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/151"
+}
