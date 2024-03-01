@@ -150,6 +150,13 @@ Recommendations:
 Allowing the fee feature to be disabled by admin.
 
 
+### Low-07 Unnecessary duplicated computation - In Stableswap, when first time deposit, adjusted_d will be the same as d1(updated_d)
+In stableswap, when first time deposit, adjusted_d will be the same as d1(updated_d), this is due to adjusted_reserve == updated_reserves.
+```rust
+    //@audit Low: unnecessary duplicated computation - when first time deposit, adjusted_d will be the same as d1(updated_d), due to adjusted_reserve == updated_reserves
+	let adjusted_d = calculate_d::<D>(&adjusted_reserves, amplification)?;
+```
 
-
+Recommendations:
+Consider bypass when first-time deposit. 
 
