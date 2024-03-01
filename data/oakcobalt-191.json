@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "oakcobalt",
+  "risk": "2",
+  "title": "Circuit breaker is vulnerable to `on_finalize()` miss or fail, at risk of outdated trading or liquidity limit leading to over-trading",
+  "issueId": 191,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/191"
+}
