@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "99Crits",
+  "risk": "2",
+  "title": "Mismatch of math specification and implementation might cause too little LRNA compensation",
+  "issueId": 192,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/192"
+}
