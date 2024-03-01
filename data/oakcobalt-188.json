@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "oakcobalt",
+  "risk": "2",
+  "title": "Omnipool's asset_weight_cap can be bypassed, resulting in an unhealthy state of the pool",
+  "issueId": 188,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/188"
+}
