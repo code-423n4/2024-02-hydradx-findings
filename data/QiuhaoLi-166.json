@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "QiuhaoLi",
+  "risk": "2",
+  "title": "omnipool: LP can get zero asset when withdraw liquidity with one share",
+  "issueId": 166,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/166"
+}
