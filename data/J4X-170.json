@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "J4X",
+  "risk": "2",
+  "title": "Users can't withdraw liquidity if token value falls quickly",
+  "issueId": 170,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/170"
+}
