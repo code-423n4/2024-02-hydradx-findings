@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "QiuhaoLi",
+  "risk": "2",
+  "title": "omnipool: withdraw_protocol_liquidity should ensure spot price and EMAprice diff is not big",
+  "issueId": 177,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/177"
+}
