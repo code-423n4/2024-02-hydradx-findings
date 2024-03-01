@@ -81,3 +81,24 @@ Recommendations:
 Add a check to ensure safe_withdrawal is true, instead of hardcoding `true` value.
 
 
+### Low-04 `pool.is_valid()` will only check the minimum number of assets , not maximum number assets
+**instances(1)**
+In stableswap - `do_create_pool()`, pool validity is check in `is_valid()`. 
+
+However, `is_valid()` only ensure there are minimum (2) assets in the pool but no maximum number cap is checked. Based on doc and lib.rs, we know the maximum number cap is (5). (`pub const MAX_ASSETS_IN_POOL: u32 = 5;`)
+```rust
+//HydraDX-node/pallets/stableswap/src/lib.rs
+fn do_create_pool(
+...
+//@audit pool.is_valid() only check wether there're at least two assets in the pool, but it didn't check whether the max is over 5. 
+|>		ensure!(pool.is_valid(), Error::<T>::IncorrectAssets);
+...
+pub(crate) fn is_valid(&self) -> bool {
+|> self.assets.len() >= 2 && has_unique_elements(&mut self.assets.iter())
+}
+```
+(https://github.com/code-423n4/2024-02-hydradx/blob/603187123a20e0cb8a7ea85c6a6d718429caad8d/HydraDX-node/pallets/stableswap/src/types.rs#L54)
+
+Recommendations:
+Check both minimum number and maximum number.
+
