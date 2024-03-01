@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "oakcobalt",
+  "risk": "2",
+  "title": "Ema-oracle will show an arbitrage asset price, even though the asset was completely removed from the omnipool",
+  "issueId": 169,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/169"
+}
