@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "Aymen0909",
+  "risk": "2",
+  "title": "`calculate_ann` function not calculating `amplification * n^n`",
+  "issueId": 172,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/172"
+}
