@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "oakcobalt",
+  "risk": "2",
+  "title": "MinPoolLiquidity safeguard can be bypassed in stable swap",
+  "issueId": 155,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/155"
+}
