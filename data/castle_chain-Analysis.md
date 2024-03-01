@@ -114,7 +114,14 @@ The protocol should provide an additional layer of protection to the liquidity p
 3) use dynamic and asset specific value for `minimumTradingLimit` and `minimumPoolLiquidity`
 using dynamic minimum limit and make the it specific for each asset , will decrease the possibility of preventing the token from being used , because each token in the ecosystem has different decimals and the value of each token differs also , so specifying a constant minimum limit for all asset can prevent some users from using this token because the minimum limit worth a big value or providing the minimum limit will exceed the `max_weight_cap` of this token .
 4) add comments to all math files since they have a complex logic but there is no enough amount comments to describe all the calculations done . 
-5) create a function to calculate `delta_shares` since it got calculated several times in the code , and to increase the modularity of the code it will be better to create a function to calculate this value in the file `math.rs` .  
+5) create a function to calculate `delta_shares` since it got calculated several times in the code , and to increase the modularity of the code it will be better to create a function to calculate this value in the file `math.rs` .
+
+## New features to be added 
+1) flash loans can be added to hudraDx omnipool and stableswap pools to provide addtional defi features to the users and this can allocate more fees to the protocol , which help the protocol grow faster
+ - the flash loans functionality can be added by create a new function that will receive the loan request, interact with the pallet to execute the arbitrage or desired action, and ensure the borrowed assets are repaid within the same transaction.
+ - the benefits of flash loans to the protocol and the users :
+    1) Arbitrage Opportunities : allow users to exploit temporary price inefficiencies across different DeFi platforms. By borrowing assets from the Stableswap pool without upfront capital ,  and then return the borrowed amount and pay some fees to the protocol .
+    2) Improved Capital Efficiency for the users .   
 
 | Codebase Quality Categories              | Comments                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -160,6 +167,8 @@ Accordingly, I analyzed and audited the subject in the following steps:
 
 ## time spent 
 176 hours over 25 days 
+
+
 
 
 
