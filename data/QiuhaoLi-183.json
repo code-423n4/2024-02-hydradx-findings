@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "QiuhaoLi",
+  "risk": "2",
+  "title": "omipool: update_hdx_subpool_hub_asset should ensure the input LRNA not excess MaxInRatio and protected by circuit breaker",
+  "issueId": 183,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/183"
+}
