@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "oakcobalt",
+  "risk": "2",
+  "title": "Stableswap pool is incompatible with some common stable coin(e.g. USDT) with an optional fee feature,  and will have erroneous reserve accounting",
+  "issueId": 175,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/175"
+}
