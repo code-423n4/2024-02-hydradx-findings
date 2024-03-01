@@ -928,9 +928,7 @@ The HydraDX protocol combines these components to provide a comprehensive and fl
 
 ## Systemic Risks, Centralization Risks, Technical Risks & Integration Risks
 
-The analysis provided highlights several significant systemic and centralization risks present in the HydraDX. These risks encompass concentration risk in `d`, `d` risk and more, third-party dependency risk, and centralization risks arising.
-
-Here's an analysis of potential systemic and centralization risks in the contracts:
+Here's an analysis of potential systemic, centralization, Technical and Integration risks in the contracts:
 
 #### Omnipool
 
@@ -1275,6 +1273,8 @@ Here's an analysis of potential systemic and centralization risks in the contrac
 ### LBP
 
 - Attack on LBP taking advantage of exponent implementation
+
+
 
 
 ### Time spent:
