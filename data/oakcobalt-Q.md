@@ -102,3 +102,54 @@ pub(crate) fn is_valid(&self) -> bool {
 Recommendations:
 Check both minimum number and maximum number.
 
+### Low-05 Single constant number of MinTradingLimit/ MinPoolLiquidity might not fit assets with various decimal precision.
+**instances(1)**
+In stableswap pool, `MinTradingLimit`/ `MinPoolLiquidity` are used to check trading and liquidity management. However, both `MinTradingLimit` and `MinPoolLiquidity` are hardcoded `Balance` which might not fit all possible assets decimal precisions stableswap intends to support. It might over constraint or under constraint depending on exact token decimal place, which allow user to deposit or trade dust amount.
+```rust
+		/// Minimum pool liquidity
+		#[pallet::constant]
+		type MinPoolLiquidity: Get<Balance>;
+
+		/// Minimum trading amount
+		#[pallet::constant]
+		type MinTradingLimit: Get<Balance>;
+```
+(https://github.com/code-423n4/2024-02-hydradx/blob/603187123a20e0cb8a7ea85c6a6d718429caad8d/HydraDX-node/pallets/stableswap/src/lib.rs#L152-L157)
+
+Recommendations:
+Consider allowing this to be configurable perhaps by pool or by asset. Or trading limit can be enforced as a ratio as well.
+
+### Low-06 Stableswap pool will always have a portion of funds locked inside due to vulnerable fee implementation.
+**instances(1)**
+The problem is there is going to be a small amount of assets left in the stableswap pool, because the fee implementation in `remove_liquidity_one_asset()` and `withdraw_asset_amount()`. 
+```rust
+//HydraDX-node/pallets/stableswap/src/lib.rs
+		pub fn remove_liquidity_one_asset(
+			origin: OriginFor<T>,
+			pool_id: T::AssetId,
+			asset_id: T::AssetId,
+			share_amount: Balance,
+			min_amount_out: Balance,
+		) -> DispatchResult {
+...
+			//Calculate how much asset user will receive. Note that the fee is already subtracted from the amount.
+                        //@audit fee amount will be deducted no matter the current reserve state
+|>			let (amount, fee) = hydra_dx_math::stableswap::calculate_withdraw_one_asset::<D_ITERATIONS, Y_ITERATIONS>(
+				&initial_reserves,
+				share_amount,
+				asset_idx,
+				share_issuance,
+				amplification,
+				pool.fee,
+			)
+...
+```
+(https://github.com/code-423n4/2024-02-hydradx/blob/603187123a20e0cb8a7ea85c6a6d718429caad8d/HydraDX-node/pallets/stableswap/src/lib.rs#L592)
+
+Recommendations:
+Allowing the fee feature to be disabled by admin.
+
+
+
+
+
