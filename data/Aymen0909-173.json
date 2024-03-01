@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "Aymen0909",
+  "risk": "2",
+  "title": "Users can be forced to pay higher withdrawal fee when calling `remove_liquidity`",
+  "issueId": 173,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/173"
+}
