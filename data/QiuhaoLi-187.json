@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "QiuhaoLi",
+  "risk": "2",
+  "title": "omnipool: MaxOutRatio protections in buy should consider asset fees -- use amount_without_fee instead of asset_state.reserve",
+  "issueId": 187,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/187"
+}
