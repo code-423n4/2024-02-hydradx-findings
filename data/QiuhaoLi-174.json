@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "QiuhaoLi",
+  "risk": "2",
+  "title": "omnipool: set_asset_tradable_state should ensure slot price if not far from oracle price when set an asset to safe withdraw mode",
+  "issueId": 174,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/174"
+}
