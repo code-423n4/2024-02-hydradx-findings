@@ -1,0 +1,8 @@
+{
+  "contest": 327,
+  "handle": "QiuhaoLi",
+  "risk": "2",
+  "title": "omnipool: pool's weight cap can be break by front-running add_token which lacks relative check",
+  "issueId": 167,
+  "issueUrl": "https://github.com/code-423n4/2024-02-hydradx-findings/issues/167"
+}
